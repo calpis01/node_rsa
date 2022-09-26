@@ -3,8 +3,8 @@ const NodeRSA = require('node-rsa');
 function generateKeyPair(bits){
   const key = new NodeRSA({b: bits});
 
-  var priv = key.exportKey('pkcs1-private');
-  var pub = key.exportKey('pkcs1-public');
+  var priv = key.exportKey('pkcs1-private-der');
+  var pub = key.exportKey('pkcs1-public-der');
 
   return {public: pub, private: priv};
 }
@@ -28,17 +28,17 @@ function der2der(key, src_scheme, dest_scheme){
 
 function publicEncrypt(key, buffer){
   var input = Buffer.from(buffer);
-  var pem = Buffer.from(key);
-  const rsa = new NodeRSA(pem, 'pkcs1-public-pem', { encryptionScheme : 'pkcs1_oaep' });
-  var enc = rsa.encrypt(input, 'base64');
+  var der = Buffer.from(key);
+  const rsa = new NodeRSA(der, 'pkcs1-public-der', { encryptionScheme : 'pkcs1_oaep' });
+  var enc = rsa.encrypt(input);
   return enc;
 }
 
 function privateDecrypt(key, buffer){
   var input = Buffer.from(buffer);
-  var pem = Buffer.from(key);
-  const rsa = new NodeRSA(pem, 'pkcs1-private-pem', { encryptionScheme : 'pkcs1_oaep' });
-  var dec = rsa.decrypt(input);
+  var der = Buffer.from(key);
+  const rsa = new NodeRSA(der, 'pkcs1-private-der', { encryptionScheme : 'pkcs1_oaep' });
+  var dec = rsa.decrypt(input, 'json');
   return dec;
 }
 
