@@ -1,3 +1,5 @@
 node_modules/
-file1.txt
-file2.txt
+a.js
+*.txt
+*.png
+*.csv
