@@ -42,17 +42,17 @@ fs.readFile(__dirname + '/sample.png', function(err, data){
         if (err) throw err;
         console.log('正常に書き込みが完了しました');
       });
-    
+      
       const byteCharacters = atob(encrypted.toString('base64'));
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
           byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
       const byteArray = new Uint8ClampedArray(byteNumbers);
-      fs.writeFile("file3.txt", byteArray.toString(), (err) => {
-        if (err) throw err;
-        console.log('正常に書き込みが完了しました');
-
-      });
-
+      console.log('uintArray=', byteArray);
+/*
+    const dataUri = 'data:image/png;base64,ABCDEFYOURIMAGEHEREABCDEF';
+    const png = PNG.sync.read(Buffer.from(dataUri.slice('data:image/png;base64,'.length), 'base64'));
+    const code = jsqr(Uint8ClampedArray.from(png.data), png.width, png.height);
+*/
 });
